@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>itzrealme Iconic Moment</title>
+  <style>
+    html,body{height:100%;margin:0;background:#000;color:#fff;font-family:Segoe UI,Arial,sans-serif}
+    .container{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center}
+    video{max-width:100%;max-height:100vh;object-fit:contain;border-radius:12px;box-shadow:0 8px 48px rgba(0,0,0,0.6)}
+    .sound-btn{position:fixed;bottom:20px;right:20px;background:rgba(0,0,0,0.6);color:#fff;border:none;padding:10px 14px;border-radius:8px;font-size:16px;cursor:pointer;display:none;z-index:10}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <video id="itzVid" controls autoplay playsinline preload="auto" muted>
+      <source src="itzrealmebackground.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <button id="soundBtn" class="sound-btn">Enable Sound</button>
+  <script>
+    (function(){
+      var v = document.getElementById('itzVid');
+      var btn = document.getElementById('soundBtn');
+      function showBtn(){ btn.style.display='block'; }
+      function tryUnmuted(){
+        v.muted = false;
+        var p = v.play();
+        if(p !== undefined){
+          p.then(function(){ /* played with sound */ }).catch(function(){
+            v.muted = true;
+            v.play().catch(function(){});
+            showBtn();
+          });
+        }
+      }
+      tryUnmuted();
+      btn.addEventListener('click', function(){
+        v.muted = false;
+        v.volume = 1;
+        v.play().catch(function(){});
+        btn.style.display = 'none';
+      });
+    })();
+  </script>
+</body>
+</html>
